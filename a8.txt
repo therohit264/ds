@@ -1,0 +1,37 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load inbuilt Titanic dataset
+df = sns.load_dataset("titanic")
+
+print(df.head())
+print(df.shape)
+print(df.dtypes)
+print("\nMissing Values:")
+print(df.isnull().sum())
+
+# Fill missing values in age column
+df['age'].fillna(df['age'].median())
+
+# Correlation Heatmap
+sns.heatmap(df.corr(numeric_only=True),annot=True)
+plt.title("Correlation Heatmap")
+plt.show()
+
+# Histogram of Age
+sns.histplot(df['age'], kde=True)
+plt.title("Age Distribution")
+plt.show()
+
+# Histogram of Fare
+sns.histplot(df['fare'], kde=True)
+plt.title("Fare Distribution")
+plt.show()
+
+# Observations
+print("\nObservations:")
+print("1. Age values are mostly concentrated between 20 and 40.")
+print("2. Fare distribution is positively skewed.")
+print("3. Heatmap shows correlation between numerical columns.")
+print("4. KDE curve helps understand data density.")

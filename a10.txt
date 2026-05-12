@@ -1,0 +1,48 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load Iris Dataset
+df = sns.load_dataset("iris")
+
+# Display dataset
+print(df.head())
+
+# Display feature variables
+print("\nFeature Variables:")
+print(df.columns)
+
+# Display data types
+print("\nData Types:")
+print(df.dtypes)
+
+# Overall Histograms
+df.hist(figsize=(10, 8))
+plt.suptitle("Overall Histograms of Iris Features")
+plt.show()
+
+# Group-wise Histograms
+features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
+
+for feature in features:
+    sns.histplot(data=df, x=feature, hue='species', kde=True)
+    plt.title(f"Histogram of {feature} by Species")
+    plt.show()
+
+# Overall Boxplot
+df.boxplot(figsize=(10, 6))
+plt.title("Overall Boxplot of Iris Features")
+plt.show()
+
+# Group-wise Boxplots
+for feature in features:
+    sns.boxplot(x='species', y=feature, data=df)
+    plt.title(f"Boxplot of {feature} by Species")
+    plt.show()
+
+# Observations
+print("\nObservations:")
+print("1. Setosa flowers have smaller petal length and width.")
+print("2. Virginica flowers have larger dimensions.")
+print("3. Boxplots help identify outliers.")
+print("4. Histograms show data distribution.")

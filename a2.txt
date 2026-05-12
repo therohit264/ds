@@ -1,0 +1,64 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler
+
+# Load Dataset
+df = pd.read_csv("StudentPerformance.csv")
+
+# Display Dataset
+print("First 5 Rows:")
+print(df.head())
+
+# Dataset Information
+print("\nShape of Dataset:")
+print(df.shape)
+
+print("\nData Types:")
+print(df.dtypes)
+
+print("\nStatistical Information:")
+print(df.describe())
+
+# Check Missing Values
+print("\nMissing Values:")
+print(df.isnull().sum())
+
+# Fill Missing Numeric Values with Mean
+df.fillna(df.mean(numeric_only=True), inplace=True)
+
+# Fill Missing Categorical Values with Mode
+df.fillna(df.mode().iloc[0], inplace=True)
+
+print("\nMissing Values After Filling:")
+print(df.isnull().sum())
+
+# Detect Outliers using Boxplot
+sns.boxplot(data=df[['math_score','reading_score','writing_score']])
+
+plt.title("Boxplot for Outlier Detection")
+plt.show()
+
+# Correlation Matrix
+print("\nCorrelation Matrix:")
+print(df.corr(numeric_only=True))
+
+# Heatmap
+sns.heatmap(df.corr(numeric_only=True),annot=True)
+plt.title("Correlation Heatmap")
+plt.show()
+
+# Discretization (Binning)
+df['Math_Score_Bin'] = pd.cut(df['math_score'],bins=3,
+                              labels=['Low', 'Medium', 'High'])
+
+print("\nBinned Data:")
+print(df[['math_score', 'Math_Score_Bin']])
+
+# Normalization
+scaler = MinMaxScaler()
+
+print(scaler.fit_transform(df[['math_score','reading_score','writing_score']]))
+
+print("\nNormalized Dataset:")
+print(df.head())

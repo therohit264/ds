@@ -8,8 +8,7 @@ from sklearn.metrics import confusion_matrix, classification_report, accuracy_sc
 
 # Load dataset
 df = sns.load_dataset("iris")
-
-print(df)
+print(df.head())
 
 # Missing values
 print("\nMissing Values:")
@@ -17,7 +16,6 @@ print(df.isnull().sum())
 
 # Convert species into numeric
 df["species"] = df["species"].astype("category").cat.codes
-df
 
 # Remove outliers using IQR
 Q1 = df["sepal_width"].quantile(0.25)
@@ -26,25 +24,20 @@ Q3 = df["sepal_width"].quantile(0.75)
 IQR = Q3 - Q1
 
 df = df[
-    (df["sepal_width"] >= Q1 - 1.5*IQR) &
-    (df["sepal_width"] <= Q3 + 1.5*IQR)
+    (df["sepal_width"] >= Q1 - 1.5 * IQR) &
+    (df["sepal_width"] <= Q3 + 1.5 * IQR)
 ]
 
-from numpy import positive
 # Correlation Heatmap
-
-# values - display correlation
-
 sns.heatmap(df.corr(), annot=True)
+plt.title("Correlation Heatmap")
 plt.show()
-
-# Iris dataset has only 5 columns
 
 # Input and Output
 X = df.iloc[:, :4].values
 y = df.iloc[:, 4].values
 
-# Split dataset
+# Train Test Split
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=0
 )
@@ -55,15 +48,21 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
-# Train model
+# Gaussian Naive Bayes
 model = GaussianNB()
+
 model.fit(X_train, y_train)
 
 # Prediction
 y_pred = model.predict(X_test)
 
 # Accuracy
-print("\nAccuracy:", accuracy_score(y_test, y_pred))
+accuracy = accuracy_score(y_test, y_pred)
+
+print("\nAccuracy:", accuracy)
+
+# Error Rate
+print("Error Rate:", 1 - accuracy)
 
 # Confusion Matrix
 cm = confusion_matrix(y_test, y_pred)
@@ -78,3 +77,8 @@ plt.show()
 # Classification Report
 print("\nClassification Report:")
 print(classification_report(y_test, y_pred))
+
+# User Input Prediction
+sample = [[5.1, 3.5, 1.4, 0.2]]
+prediction = model.predict(sample)
+print("Predicted Class:", prediction)

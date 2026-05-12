@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.metrics import confusion_matrix, f1_score
 
 # Load dataset
 df = pd.read_csv("Social_Network_Ads.csv")
@@ -49,7 +49,7 @@ print("\nAccuracy:", (TP + TN) / (TP + TN + FP + FN))
 print("Error Rate:", (FP + FN) / (TP + TN + FP + FN))
 print("Precision:", TP / (TP + FP))
 print("Recall:", TP / (TP + FN))    
-
+print("F1 Score:", f1_score(y_test, y_pred))
 # Heatmap of confusion matrix
 sns.heatmap(cm, annot=True, fmt='d')
 plt.show()

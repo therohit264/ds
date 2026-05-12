@@ -25,6 +25,8 @@ print("\n\n")
 # --- Part B: Iris Dataset ---
 iris = sns.load_dataset('iris')
 print(iris.groupby('species').describe())
+print("\n\n")
+print(iris.describe())
 
 print("\n\n")
 # Barplot - compares values across distinct categories (how much or how many for each group)
