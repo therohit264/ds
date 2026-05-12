@@ -1,0 +1,41 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# --- Part A: Employee Salary ---
+df = pd.read_csv("Social_Network_Ads.csv")
+print(df.describe())
+print("Mean:",   df['EstimatedSalary'].mean())
+print("Median:", df['EstimatedSalary'].median())
+print("Mode:",   df['EstimatedSalary'].mode()[0])
+print("Std:",    df['EstimatedSalary'].std())
+print("Var:",    df['EstimatedSalary'].var())
+
+print("\n\n")
+# Grouped stats by Gender
+print(df.groupby('Gender')['EstimatedSalary'].agg(['mean','median','std','min','max']))
+
+print("\n\n")
+# Bar plot
+sns.barplot(x='Gender', y='EstimatedSalary', data=df)
+plt.title("Salary by Gender")
+plt.show()
+
+print("\n\n")
+# --- Part B: Iris Dataset ---
+iris = sns.load_dataset('iris')
+print(iris.groupby('species').describe())
+
+print("\n\n")
+# Barplot - compares values across distinct categories (how much or how many for each group)
+# Histplot - distribution of continuous numerical data (how is the data spreadout)
+# Boxplot - statistical summary (for detection of outliers)
+sns.barplot(x='species', y='sepal_length', data=iris)
+plt.title("Sepal Length by Species")
+plt.show()
+
+print("\n\n")
+# box plot
+sns.boxplot(x='Gender', y='EstimatedSalary', data=df)
+plt.title("Salary by Gender")
+plt.show()
