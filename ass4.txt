@@ -4,6 +4,7 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 import numpy as np
+
 def DetectOutlier(df, var):
     Q1 = df[var].quantile(0.25)
     Q3 = df[var].quantile(0.75)
@@ -78,20 +79,23 @@ while (choice != 9):
         plt.show()
 
     if (choice == 6):
-		
+        
         X = df[['rm', 'lstat']]
         y = df['medv']
         
-        X_train, X_test, y_test, y_train = train_test_split(X, y, test_size=0.20, random_state=0)
+        # FIX 1: Corrected the order of y_train and y_test
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=0)
         print('X_train = ', X_train)
         print('X_test = ', X_test)
-		
-        model = LinearRegression().fit(np.array(X_train).reshape(-1, 1), y_train)
+        
+        # FIX 2: Removed the .reshape(-1, 1) because X_train is already 2D
+        model = LinearRegression().fit(X_train, y_train)
         y_pred = model.predict(X_test)
         print('y_pred = ', y_pred)
         print('y_test = ', y_test)
 
-        from sklearn.metrics import mean_squared_error
+        # FIX 3: Imported the correct metric
+        from sklearn.metrics import mean_absolute_error
 
         print('MAE: ', mean_absolute_error(y_test, y_pred))
         print("model score: ", model.score(X_test, y_test))
@@ -103,8 +107,9 @@ while (choice != 9):
 
         y = df['medv']
         
-        X_train, X_test, y_test, y_train = train_test_split(X, y, test_size=0.20, random_state=0)
-		
+        # FIX 4: Corrected the order of y_train and y_test here too
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=0)
+        
         print('X_train = ', X_train)
         X = X.dropna()
         X_train=X_train.dropna()

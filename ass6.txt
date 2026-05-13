@@ -85,7 +85,7 @@ while(choice != 9):
         import warnings
 
         warnings.filterwarnings("ignore")
-        df = pd.read_csv('E:\Iris.csv')
+        df = pd.read_csv('Iris.csv')
         print(df.head().T)
         print("\nColumn Names: \n")
         print(df.columns)
