@@ -1,0 +1,141 @@
+import nltk
+import re
+
+from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+from nltk.corpus import stopwords
+
+# Download required resources
+nltk.download('punkt')
+nltk.download('punkt_tab')
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('averaged_perceptron_tagger_eng')
+
+# Sample text
+text = """Tokenization is the first step in text analytics.
+The process of breaking down text paragraphs into smaller chunks 
+such as words or sentences is called tokenization."""
+
+# Initialize tools
+stop_words = set(stopwords.words("english"))
+ps = PorterStemmer()
+lemmatizer = WordNetLemmatizer()
+
+choice = 0
+
+while choice != 9:
+
+    print("\n===== MENU =====")
+    print("1. Sentence Tokenization")
+    print("2. Word Tokenization")
+    print("3. Print Stop Words")
+    print("4. Remove Non-Alphabetic Characters")
+    print("5. Stemming")
+    print("6. Lemmatization")
+    print("7. POS Tagging")
+    print("8. Remove Stop Words")
+    print("9. Exit")
+
+    try:
+        choice = int(input("Enter your choice: "))
+
+    except ValueError:
+        print("Please enter a valid number!")
+        continue
+
+    # 1 Sentence Tokenization
+    if choice == 1:
+
+        sentences = sent_tokenize(text)
+
+        print("\nSentence Tokens:")
+        print(sentences)
+
+    # 2 Word Tokenization
+    elif choice == 2:
+
+        words = word_tokenize(text)
+
+        print("\nWord Tokens:")
+        print(words)
+
+    # 3 Stop Words
+    elif choice == 3:
+
+        print("\nStop Words:")
+        print(stop_words)
+
+    # 4 Remove Special Characters
+    elif choice == 4:
+
+        text2 = "How to remove non alphabetic characters 1234 ?"
+
+        cleaned = re.sub(r'[^a-zA-Z\s]', '', text2)
+
+        print("\nOriginal Text:")
+        print(text2)
+
+        print("\nCleaned Text:")
+        print(cleaned)
+
+    # 5 Stemming
+    elif choice == 5:
+
+        words = ["wait", "waiting", "waited", "waits", "learning"]
+
+        print("\nStemming:")
+
+        for w in words:
+            print(w, " --> ", ps.stem(w))
+
+    # 6 Lemmatization
+    elif choice == 6:
+
+        text3 = "studies studying cries cry"
+
+        print("\nLemmatization:")
+
+        for w in word_tokenize(text3):
+            print(w, " --> ", lemmatizer.lemmatize(w))
+
+    # 7 POS Tagging
+    elif choice == 7:
+
+        sentence = "The pink sweater fit her perfectly"
+
+        words = word_tokenize(sentence)
+
+        tagged = nltk.pos_tag(words)
+
+        print("\nPOS Tags:")
+
+        for word, tag in tagged:
+            print(word, " --> ", tag)
+
+    # 8 Remove Stop Words
+    elif choice == 8:
+
+        tokens = word_tokenize(text.lower())
+
+        filtered = []
+
+        for word in tokens:
+
+            if word not in stop_words:
+                filtered.append(word)
+
+        print("\nOriginal Tokens:")
+        print(tokens)
+
+        print("\nFiltered Tokens:")
+        print(filtered)
+
+    # 9 Exit
+    elif choice == 9:
+
+        print("\nProgram Exited Successfully!")
+
+    else:
+        print("\nInvalid Choice!")

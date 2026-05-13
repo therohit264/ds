@@ -1,0 +1,62 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+#---Read dataset---
+df = pd.read_csv('Iris.csv')
+#---Displaying of dataset---
+print(df)
+
+print(df.head())
+
+#---Describing dataset---
+print(df.describe())
+
+print(df.describe(include = 'object'))
+
+#---Sum of null values---
+print(df.isnull().sum())
+
+#column_name = ['Id','SepalLengthCm','SepalWidthCm','PetalLengthCm','PetalWidthCm','Species']
+column_name = ['Id','sepal_length','sepal_width','petal_length','petal_width','species']
+df.columns=column_name
+
+print("\n\nThe features in the dataset are as follows : ")
+print("1. Sepal length : ", df['sepal_length'].dtype)
+print("2. Sepal width : ", df['sepal_width'].dtype)
+print("3. Petal length : ", df['petal_length'].dtype)
+print("4. Petal width : ", df['petal_width'].dtype)
+print("5. Species : ", df['species'].dtype)
+
+
+#df.head()
+#print(df.info())
+
+#sns.boxplot(x=df['SepalLengthCm'],y=df['PetalLengthCm'])
+#plt.show()
+
+#plt.hist(df['SepalLengthCm'],bins=5)
+#plt.show()
+
+sns.histplot(x = df['sepal_length'], kde=True)
+plt.show()
+sns.histplot(x = df['sepal_width'], kde=True)
+plt.show()
+sns.histplot(x = df['petal_length'], kde=True)
+plt.show()
+sns.histplot(x = df['petal_width'], kde=True)
+plt.show()
+
+
+sns.boxplot(df['sepal_length'])
+plt.show()
+sns.boxplot(df['sepal_width'])
+plt.show()
+sns.boxplot(df['petal_length'])
+plt.show()
+sns.boxplot(df['petal_width'])
+plt.show()
+sns.boxplot(x='sepal_length',y='species',data=df)
+plt.show()
+sns.boxplot(x='petal_length',y='species',data=df)
+plt.show()
